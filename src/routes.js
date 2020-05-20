@@ -1,24 +1,25 @@
-"use strict";
+
 /**
  * Express routes, url handling
  */
 
-var express = require('express');
-var path = require('path');
-var app = express();
-var config = require(__dirname + "/config");
+const express = require('express');
+const path = require('path');
 
-app.get("/", function (req, res) {
-    res.sendFile(path.resolve(__dirname + "/../public/index.html"));
+const app = express();
+const config = require('./config');
+
+app.get('/', (req, res) => {
+  res.sendFile(path.resolve(`${__dirname}/../public/index.html`));
 });
 
 // output the required ws port number
-app.get("/wsconfig", function (req, res) {
-    res.send(JSON.stringify({port : config.port + 1, sslUrl : config.websocketUrlSsl, url : config.websocketUrl}));
+app.get('/wsconfig', (req, res) => {
+  res.send(JSON.stringify({ port: config.port + 1, sslUrl: config.websocketUrlSsl, url: config.websocketUrl }));
 });
 
-app.use(express.static(__dirname + "/../public"));
+app.use(express.static(`${__dirname}/../public`));
 
-app.listen(config.port, config.host, function () {
+app.listen(config.port, config.host, () => {
 
 });

@@ -1,27 +1,26 @@
-"use strict";
 
-var request = require(__dirname + "/request");
+const request = require(`${__dirname}/request`);
 /**
  * Core
  * @type {object}
  */
-var core = {};
+const core = {};
 
 /** @type {string} */
-core.latestVersion = "";
+core.latestVersion = '';
 
 /**
  * Fetch latest version for the core
  */
 core.fetchLatestVersion = function () {
-    request.get("https://raw.githubusercontent.com/brainfoolong/rcon-web-admin/master/package.json", false, function (content) {
-        if (content) {
-            var manifest = JSON.parse(content);
-            if (manifest && manifest.version) {
-                core.latestVersion = manifest.version;
-            }
-        }
-    });
+  request.get('https://raw.githubusercontent.com/rcon-web-admin/rcon-web-admin/master/package.json', false, (content) => {
+    if (content) {
+      const manifest = JSON.parse(content);
+      if (manifest && manifest.version) {
+        core.latestVersion = manifest.version;
+      }
+    }
+  });
 };
 
 // fetch latest version each hour

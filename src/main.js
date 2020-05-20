@@ -15,14 +15,14 @@ if (!mode) {
 
 if (mode == "start") {
     if (process.env.RWA_ENV == "TRUE") {
-        require(__dirname + "/env")
+        require('./env')
     }
-    require(__dirname + "/routes");
-    require(__dirname + "/rconserver");
-    require(__dirname + "/websocketmgr");
-    require(__dirname + "/steamapi");
-    require(__dirname + "/config");
-    require(__dirname + "/core");
+    require('./routes');
+    require('./rconserver');
+    require('/websocketmgr');
+    require('/steamapi');
+    require('/config');
+    require('/core');
     return;
 }
 
@@ -54,7 +54,7 @@ if (mode == "update-core") {
     var fs = require("fs");
     var unzip = require("unzip");
     //Get the update zip from the git repository
-    request.get("https://codeload.github.com/lacaulac/rcon-web-admin/zip/master", true, function (contents) {
+    request.get("https://codeload.github.com/rcon-web-admin/rcon-web-admin/zip/master", true, function (contents) {
         if (!contents.length) {
             console.error("Cannot load rcon-web-admin zip file");
             process.exit(0);

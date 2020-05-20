@@ -1,13 +1,13 @@
-"use strict";
 
-var WebSocketUser = require(__dirname + "/websocketuser");
-var WebSocketServer = require("ws").Server;
-var config = require(__dirname + "/config");
+const WebSocketUser = require('./websocketuser');
+const WebSocketServer = require('ws').Server;
+
+const config = require('./config');
 
 /**
  * Some tools for web socket server management
  */
-var WebSocketMgr = {};
+const WebSocketMgr = {};
 
 /**
  * The socket server itself
@@ -19,35 +19,35 @@ WebSocketMgr.server = null;
  * Start the websocket server
  */
 WebSocketMgr.startServer = function () {
-    try {
-        if (WebSocketMgr.server === null) {
-            WebSocketMgr.server = new WebSocketServer({port: config.port + 1});
-            WebSocketMgr.server.on('connection', function connection(ws) {
-                var user = new WebSocketUser(ws);
-                ws.on('message', function incoming(message) {
-                    try {
-                        user.onMessage(JSON.parse(message));
-                    } catch (e) {
-                        console.error(new Date(), e.stack);
-                    }
-                });
-                ws.on("close", function () {
-                    try {
-                        user.onMessage({"action": "closed"});
-                    } catch (e) {
-                        console.error(new Date(), e.stack);
-                    }
-                });
-            });
-            // if for some reason the server went down, restart it some seconds later
-            WebSocketMgr.server.on('close', function close() {
-                WebSocketMgr.server = null;
-                WebSocketUser.instances = [];
-            });
-        }
-    } catch (e) {
-        console.error(new Date(), "Start Websocket Server error", e);
+  try {
+    if (WebSocketMgr.server === null) {
+      WebSocketMgr.server = new WebSocketServer({ port: config.port + 1 });
+      WebSocketMgr.server.on('connection', (ws) => {
+        const user = new WebSocketUser(ws);
+        ws.on('message', (message) => {
+          try {
+            user.onMessage(JSON.parse(message));
+          } catch (e) {
+            console.error(new Date(), e.stack);
+          }
+        });
+        ws.on('close', () => {
+          try {
+            user.onMessage({ action: 'closed' });
+          } catch (e) {
+            console.error(new Date(), e.stack);
+          }
+        });
+      });
+      // if for some reason the server went down, restart it some seconds later
+      WebSocketMgr.server.on('close', () => {
+        WebSocketMgr.server = null;
+        WebSocketUser.instances = [];
+      });
     }
+  } catch (e) {
+    console.error(new Date(), 'Start Websocket Server error', e);
+  }
 };
 
 // start websocket server and create an interval

@@ -1,9 +1,8 @@
-"use strict";
 
 /**
  * Global Interval Handling
  */
-var Interval = {};
+const Interval = {};
 
 /** @type {object} */
 Interval.list = {};
@@ -15,8 +14,8 @@ Interval.list = {};
  * @param {number} step
  */
 Interval.create = function (id, func, step) {
-    Interval.destroy(id);
-    Interval.list[id] = setInterval(func, step);
+  Interval.destroy(id);
+  Interval.list[id] = setInterval(func, step);
 };
 
 /**
@@ -24,8 +23,8 @@ Interval.create = function (id, func, step) {
  * @param {string} id
  */
 Interval.destroy = function (id) {
-    if (typeof Interval.list[id] != "undefined" && Interval.list[id] !== null) {
-        clearInterval(Interval.list[id]);
-        Interval.list[id] = null;
-    }
+  if (typeof Interval.list[id] !== 'undefined' && Interval.list[id] !== null) {
+    clearInterval(Interval.list[id]);
+    Interval.list[id] = null;
+  }
 };

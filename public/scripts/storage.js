@@ -1,9 +1,8 @@
-"use strict";
 
 /**
  * Storage handling
  */
-var Storage = {};
+const Storage = {};
 
 /**
  * Get data from storage, from sessionstorage or localstorage, try both
@@ -11,14 +10,14 @@ var Storage = {};
  * @returns {*}
  */
 Storage.get = function (key) {
-    var storage = sessionStorage;
-    var value = storage.getItem(key);
-    if (value === null) {
-        storage = localStorage;
-        value = storage.getItem(key);
-        if (value === null) return null;
-    }
-    return JSON.parse(value);
+  let storage = sessionStorage;
+  let value = storage.getItem(key);
+  if (value === null) {
+    storage = localStorage;
+    value = storage.getItem(key);
+    if (value === null) return null;
+  }
+  return JSON.parse(value);
 };
 
 /**
@@ -28,10 +27,10 @@ Storage.get = function (key) {
  * @param {boolean=} session
  */
 Storage.set = function (key, value, session) {
-    var storage = session ? sessionStorage : localStorage;
-    if (value === null || typeof value == "undefined") {
-        storage.removeItem(key);
-    } else {
-        storage.setItem(key, JSON.stringify(value))
-    }
+  const storage = session ? sessionStorage : localStorage;
+  if (value === null || typeof value === 'undefined') {
+    storage.removeItem(key);
+  } else {
+    storage.setItem(key, JSON.stringify(value));
+  }
 };

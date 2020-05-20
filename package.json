@@ -1,13 +1,13 @@
 {
-  "author": "BrainFooLong (https://github.com/brainfoolong/rcon-web-admin)",
+  "author": "RCON Web Admin (https://github.com/rcon-web-admin)",
   "name": "rcon-web-admin",
   "description": "Self hosted, online RCON administration tool for your server.",
-  "version": "0.13.3",
+  "version": "0.14.1",
   "license": "MIT",
   "main": "src/main.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/brainfoolong/rcon-web-admin.git"
+    "url": "git://github.com/rcon-web-admin/rcon-web-admin.git"
   },
   "dependencies": {
     "express": "^4.17.1",
@@ -18,5 +18,10 @@
   },
   "engines": {
     "node": ">=4.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2"
   }
 }

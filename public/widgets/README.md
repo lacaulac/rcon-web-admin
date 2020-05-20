@@ -1,32 +1,33 @@
 # Widget development
 
-Widgets are designed to have the best high level api so you can easily extend and use features of rcon web admin. There are already some core widgets from which you can start learning.
+Widgets use high-level functions to easily extend the features of RCON Web Admin. There are some core widgets included with the app which you can use to learn.
 
-## A new widget
+## New widgets
+
 Creating a new widget is straight forward. Just copy one of the existing widgets. Rename the copied folder. Modify the `manifest.json` to your needs. `id` must be the folder name. Restart the server and you should see the widget in the dashboard.
 
 ## Documentation for widgets
-The widget class itself have a good code documentation. Here you can see what functions you can use or override. 
-* For backend: https://github.com/brainfoolong/rcon-web-admin/blob/master/src/widget.js
-* For frontend: https://github.com/brainfoolong/rcon-web-admin/blob/master/public/scripts/widget.js
 
-## Widget as core widget
-If you've developed a widget and you think it's good for a core widget than you have to deal with following requirements for your widget.
+This feature is not yet documented in a friendly way. Any contributions to extend this are welcome.
+For developers, you can view the [frontend](https://github.com/rcon-web-admin/rcon-web-admin/blob/master/public/scripts/widget.js) and [backend](https://github.com/rcon-web-admin/rcon-web-admin/blob/master/src/widget.js) widget classes to build an understanding of the widget architecture.
+
+## Contribute to this project
+
+If you would like your widget to be considered as a candidate to be included with RCON Web Admin, it must follow the following criteria:
 
 * MIT License
-* Public github repository
+* Public GitHub Repository
 
-## List of core widgets
-* https://github.com/brainfoolong/rwa-autobot
-* https://github.com/brainfoolong/rwa-console
-* https://github.com/brainfoolong/rwa-rustboard
-* https://github.com/brainfoolong/rwa-timedcommands
+## Current list of core widgets
 
+* [rwa-autobot](https://github.com/rcon-web-admin/rwa-autobot)
+* [rwa-console](https://github.com/rcon-web-admin/rwa-console)
+* [rwa-rustboard](https://github.com/rcon-web-admin/rwa-rustboard)
+* [rwa-timedcommands](https://github.com/rcon-web-admin/rwa-timedcommands)
 
 ## Tips
-* Everytime you change something in the `backend.js` you must restart the server.
-* Everytime you change something in the `frontend.js` you must reload (F5) the frontend page.
 
-## More help coming soon
-Currently there is no more help.
+During development:
 
+* If you modify `backend.js`; the server must be restarted.
+* If you modify `frontend.js`; the web page must be reloaded (F5).

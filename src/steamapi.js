@@ -1,12 +1,11 @@
-"use strict";
 
-var request = require(__dirname + "/request");
-var db = require(__dirname + "/db");
+const request = require('./request');
+const db = require('./db');
 
 /**
  * Steam utils
  */
-var steamapi = {};
+const steamapi = {};
 
 /**
  * Request to our api
@@ -15,50 +14,50 @@ var steamapi = {};
  * @param {function} callback
  */
 steamapi.request = function (type, ids, callback) {
-    if (!ids.length) {
-        callback({});
-        return;
-    }
-    var res = {};
-    var missingIds = [];
-    for (var i = 0; i < ids.length; i++) {
-        var id = ids[i];
-        var steamData = steamapi.getDataForId(type, id);
-        if (steamData) {
-            res[id] = steamData;
-        } else {
-            missingIds.push(id);
-        }
-    }
-    if (missingIds.length) {
-        request.get("https://scripts.0x.at/steamapi/api.php?action=" + type + "&ids=" + missingIds.join(","), false, function (result) {
-            if (result !== null) {
-                var steamData = null;
-                var data = JSON.parse(result);
-                if (type == "bans") {
-                    for (var i = 0; i < data.players.length; i++) {
-                        steamData = data.players[i];
-                        steamapi.saveDataForId(type, steamData.SteamId, steamData);
-                        res[steamData.SteamId] = steamData;
-                    }
-                }
-                if (type == "summaries") {
-                    if(data.response){
-                        for (var playerIndex in data.response.players) {
-                            if (data.response.players.hasOwnProperty(playerIndex)) {
-                                steamData = data.response.players[playerIndex];
-                                steamapi.saveDataForId(type, steamData.steamid, steamData);
-                                res[steamData.steamid] = steamData;
-                            }
-                        }
-                    }
-                }
-            }
-            callback(res);
-        });
+  if (!ids.length) {
+    callback({});
+    return;
+  }
+  const res = {};
+  const missingIds = [];
+  for (let i = 0; i < ids.length; i++) {
+    const id = ids[i];
+    const steamData = steamapi.getDataForId(type, id);
+    if (steamData) {
+      res[id] = steamData;
     } else {
-        callback(res);
+      missingIds.push(id);
     }
+  }
+  if (missingIds.length) {
+    request.get(`https://scripts.0x.at/steamapi/api.php?action=${type}&ids=${missingIds.join(',')}`, false, (result) => {
+      if (result !== null) {
+        let steamData = null;
+        const data = JSON.parse(result);
+        if (type == 'bans') {
+          for (let i = 0; i < data.players.length; i++) {
+            steamData = data.players[i];
+            steamapi.saveDataForId(type, steamData.SteamId, steamData);
+            res[steamData.SteamId] = steamData;
+          }
+        }
+        if (type == 'summaries') {
+          if (data.response) {
+            for (const playerIndex in data.response.players) {
+              if (data.response.players.hasOwnProperty(playerIndex)) {
+                steamData = data.response.players[playerIndex];
+                steamapi.saveDataForId(type, steamData.steamid, steamData);
+                res[steamData.steamid] = steamData;
+              }
+            }
+          }
+        }
+      }
+      callback(res);
+    });
+  } else {
+    callback(res);
+  }
 };
 
 /**
@@ -68,13 +67,13 @@ steamapi.request = function (type, ids, callback) {
  * @returns {*}
  */
 steamapi.getDataForId = function (type, id) {
-    var sdb = db.get("steamapi");
-    var playerData = sdb.get(id).value();
-    if (!playerData || !playerData[type]) return null;
-    if (playerData[type].timestamp < (new Date().getTime() / 1000 - 86400)) {
-        delete playerData[type];
-    }
-    return playerData[type] || null;
+  const sdb = db.get('steamapi');
+  const playerData = sdb.get(id).value();
+  if (!playerData || !playerData[type]) return null;
+  if (playerData[type].timestamp < (new Date().getTime() / 1000 - 86400)) {
+    delete playerData[type];
+  }
+  return playerData[type] || null;
 };
 
 /**
@@ -85,38 +84,38 @@ steamapi.getDataForId = function (type, id) {
  * @returns {*}
  */
 steamapi.saveDataForId = function (type, id, data) {
-    var sdb = db.get("steamapi");
-    var playerData = sdb.get(id).value();
-    if (!playerData) playerData = {};
-    data.timestamp = new Date().getTime() / 1000;
-    playerData[type] = data;
-    sdb.set(id, playerData).value();
+  const sdb = db.get('steamapi');
+  let playerData = sdb.get(id).value();
+  if (!playerData) playerData = {};
+  data.timestamp = new Date().getTime() / 1000;
+  playerData[type] = data;
+  sdb.set(id, playerData).value();
 };
 
 /**
  * Delete old entries
  */
 steamapi.cleanup = function () {
-    try {
-        var data = db.get("steamapi").value();
-        var timeout = new Date() / 1000 - 86400;
-        for (var steamId in data) {
-            if (data.hasOwnProperty(steamId)) {
-                var entries = data[steamId];
-                for (var entryIndex in entries) {
-                    if (entries.hasOwnProperty(entryIndex)) {
-                        var entryRow = entries[entryIndex];
-                        if (entryRow.timestamp < timeout) {
-                            delete entries[entryIndex];
-                        }
-                    }
-                }
+  try {
+    const data = db.get('steamapi').value();
+    const timeout = new Date() / 1000 - 86400;
+    for (const steamId in data) {
+      if (data.hasOwnProperty(steamId)) {
+        const entries = data[steamId];
+        for (const entryIndex in entries) {
+          if (entries.hasOwnProperty(entryIndex)) {
+            const entryRow = entries[entryIndex];
+            if (entryRow.timestamp < timeout) {
+              delete entries[entryIndex];
             }
+          }
         }
-        db.get("steamapi").setState(data);
-    } catch (e) {
-        console.error(new Date(), "Steamapi cleanup failed", e, e.stack);
+      }
     }
+    db.get('steamapi').setState(data);
+  } catch (e) {
+    console.error(new Date(), 'Steamapi cleanup failed', e, e.stack);
+  }
 };
 
 // each 30 minutes cleanup the steamapi db and remove old entries
