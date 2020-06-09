@@ -23,9 +23,7 @@ var config = {
 
     /**
      * The port for the server and websocket
-     * The given number is the one for the webinterface
-     * The given number + 1 is the websocket port
-     * Notice that both given number and the number+1 will be required
+     * The given number is the one for the webinterface and websocket
      */
     "port": 4326
 };

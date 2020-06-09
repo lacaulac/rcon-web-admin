@@ -15,13 +15,15 @@ var WebSocketMgr = {};
  */
 WebSocketMgr.server = null;
 
+var server = require('./routes');
+
 /**
  * Start the websocket server
  */
 WebSocketMgr.startServer = function () {
     try {
         if (WebSocketMgr.server === null) {
-            WebSocketMgr.server = new WebSocketServer({port: config.port + 1});
+            WebSocketMgr.server = new WebSocketServer({server});
             WebSocketMgr.server.on('connection', function connection(ws) {
                 var user = new WebSocketUser(ws);
                 ws.on('message', function incoming(message) {
