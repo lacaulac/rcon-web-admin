@@ -80,23 +80,23 @@ $ chmod 0755 -R startscripts *
 
 RCON Web Admin can be partially configured with environment variables. You may configure the initial user and server with these environment variables.
 
-| Variable | Description | Accepted values | Default value |
-|:--------:|:-----------:|:---------------:|:-------------:|
-| RWA_ENV | Enables configuration by environment variables | TRUE / FALSE | FALSE |
-| RWA_USERNAME | Sets the initial user's username | String | admin |
-| RWA_PASSWORD | Sets the initial user's password | String | |
-| RWA_RESTRICT_COMMANDS | Prevent the initial user user executing these commands | Comma-seperated list | |
-| RWA_RESTRICT_WIDGETS | Hide this list of widgets from the initial user | Comma-seperated list | |
-| RWA_READ_ONLY_WIDGET_OPTIONS | Prevent the initial user changing options in the widget options tab | TRUE / FALSE | FALSE |
-| RWA_ADMIN | Sets the initial user as an admin | TRUE / FALSE | FALSE |
-| RWA_RCON_HOST | The initial RCON server to control | Hostname or IP address | 127.0.0.1 |
-| RWA_GAME | The initial game you wish to control | minecraft / rust / csgo / other | minecraft |
-| RWA_SERVER_NAME | The display name of the initial server (if unset; defaults to value of RWA_GAME) | String | minecraft |
-| RWA_WEB_RCON | Enables 'web rcon' if supported by the game server | TRUE / FALSE | FALSE |
-| RWA_RCON_PORT | The port number of the initial RCON server to control | 0-65535 | 25575 |
-| RWA_RCON_PASSWORD | The password for the initial RCON server to control | String | '' |
-| RWA_WEBSOCKET_URL_SSL | Manually specify SSL WebSocket URL (wss://example) | wss://string | |
-| RWA_WEBSOCKET_URL | Manually specify WebSocket URL (ws://example) | ws://string | |
+| Variable | Description | Accepted values | Default value | Mandatory |
+|:--------:|:-----------:|:---------------:|:-------------:|:---------:|
+| RWA_ENV | Enables configuration by environment variables | TRUE / FALSE | FALSE | - |
+| RWA_USERNAME | Sets the initial user's username | String | admin | no |
+| RWA_PASSWORD | Sets the initial user's password | String | | yes |
+| RWA_RESTRICT_COMMANDS | Prevent the initial user user executing these commands | Comma-seperated list | | no |
+| RWA_RESTRICT_WIDGETS | Hide this list of widgets from the initial user | Comma-seperated list | | no |
+| RWA_READ_ONLY_WIDGET_OPTIONS | Prevent the initial user changing options in the widget options tab | TRUE / FALSE | FALSE | no |
+| RWA_ADMIN | Sets the initial user as an admin | TRUE / FALSE | FALSE | no |
+| RWA_RCON_HOST | The initial RCON server to control | Hostname or IP address | 127.0.0.1 | no |
+| RWA_GAME | The initial game you wish to control | minecraft / rust / csgo / other | minecraft | no |
+| RWA_SERVER_NAME | The display name of the initial server (if unset; defaults to value of RWA_GAME) | String | minecraft | no |
+| RWA_WEB_RCON | Enables 'web rcon' if supported by the game server | TRUE / FALSE | FALSE | no |
+| RWA_RCON_PORT | The port number of the initial RCON server to control | 0-65535 | 25575 | no |
+| RWA_RCON_PASSWORD | The password for the initial RCON server to control | String | '' | no |
+| RWA_WEBSOCKET_URL_SSL | Manually specify SSL WebSocket URL (wss://example) | wss://string | wss://{host}:4327 | no |
+| RWA_WEBSOCKET_URL | Manually specify WebSocket URL (ws://example) | ws://string | ws://{host}:4327 | no |
 
 ## Docker Usage
 
