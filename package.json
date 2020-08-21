@@ -12,9 +12,9 @@
   "dependencies": {
     "express": "^4.17.1",
     "fstream": ">=1.0.12",
-    "lowdb": ">=0.14.0",
-    "unzipper": "^0.10.5",
-    "ws": ">=1.1.1"
+    "lowdb": "^1.0.0",
+    "unzipper": "^0.10.11",
+    "ws": "^7.3.1"
   },
   "engines": {
     "node": ">=4.0.0"
